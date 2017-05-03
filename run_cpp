@@ -1,0 +1,25 @@
+#!/bin/bash
+# Enable debugging: set -xv
+
+# Build
+g++ -std=c++1y *.cpp
+
+I=0
+
+while [ -f $I.input ]; do
+
+    # Execute application, put output in $I.result
+    ./a.out < $I.input > $I.result
+
+    # Check the diff
+    RES=$(diff -y $I.output $I.result)
+    if [ $? -eq 0 ]; then
+        echo "$I SUCCESS"
+    else
+        echo "$I FAIL"
+        echo "$RES"
+    fi
+    echo ""
+
+    I=$(echo $I+1 | bc)
+done

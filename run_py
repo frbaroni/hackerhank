@@ -1,0 +1,24 @@
+#!/bin/bash
+# Enable debugging: set -xv
+I=0
+
+for script in ./*.py
+do
+  while [ -f $I.input ]; do
+
+      # Execute application, put output in $I.result
+      python3 $script < $I.input > $I.result
+
+      # Check the diff
+      RES=$(diff -y $I.output $I.result)
+      if [ $? -eq 0 ]; then
+          echo "$I SUCCESS"
+      else
+          echo "$I FAIL"
+          echo "$RES"
+      fi
+      echo ""
+
+      I=$(echo $I+1 | bc)
+  done
+done
