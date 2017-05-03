@@ -1,23 +1,42 @@
-def solution(A, k):
-    result = []
-    for i in range(len(A)):
-        idx = ((len(A) - k) + i) % len(A)
-        result.append(A[idx])
-    return result
+from collections import defaultdict
 
-def test(A, K, E):
-    R = solution(A, K)
+def solution(A):
+    found = defaultdict(lambda: False)
+    for k in A:
+        found[k] = True
+    for i in range(1, len(A) + 2):
+        if not found[i]:
+            return i
+    return 0
+
+def test(A, E):
+    R = solution(A)
     status = 'FAILED'
     if R == E:
         status = 'OK'
-    print('Input:\t\t{0} >> {1} \nOutput:\t\t{2}\nExpected:\t{3}\n{4}\n'
-            .format(A, K, R, E, status))
+    print('Input:\t\t{0}\nOutput:\t\t{1}\nExpected:\t{2}\n{3}\n'
+            .format(A, R, E, status))
 
-A = [3, 8, 9, 7, 6]
-E = [6, 3, 8, 9, 7]
-test(A, 1, E)
+A = [2, 3, 1, 5]
+E = 4
+test(A, E)
 
-A = [3, 8, 9, 7, 6]
-E = [9, 7, 6, 3, 8]
-test(A, 3, E)
+A = []
+E = 1
+test(A, E)
 
+A = [2, 3]
+E = 1
+test(A, E)
+
+A = [2, 1]
+E = 3
+test(A, E)
+
+A = [1]
+E = 2
+test(A, E)
+
+A = [2]
+E = 1
+test(A, E)
