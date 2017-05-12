@@ -1,11 +1,7 @@
-from collections import defaultdict
-
 def solution(A):
-    found = defaultdict(lambda: False)
-    for k in A:
-        found[k] = True
+    found = set(A)
     for i in range(1, len(A) + 2):
-        if not found[i]:
+        if not (i in found):
             return i
     return 0
 
